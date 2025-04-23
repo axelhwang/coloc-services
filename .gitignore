@@ -1,0 +1,15 @@
+vintage-story/server/
+vintage-story/backups/
+
+valheim/config/
+valheim/data/
+valheim/Valheim/
+
+satisfactory/config
+
+reverse-proxy/certbot/www
+
+medias/jellyfin/
+medias/deluge/
+
+seafile/data/

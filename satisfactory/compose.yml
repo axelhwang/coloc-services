@@ -1,0 +1,15 @@
+services:
+  satisfactory:
+    container_name: satisfactory
+    image: wolveix/satisfactory-server:latest
+    ports:
+    - '7777:7777/tcp'
+    - '7777:7777/udp'
+    environment:
+      - MAXPLAYERS=4
+      - PGID=1000
+      - PUID=1000
+      - ROOTLESS=false
+      - STEAMBETA=false
+    volumes:
+      - ./config:/config

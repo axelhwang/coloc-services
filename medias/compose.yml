@@ -1,0 +1,33 @@
+services:
+
+  deluge:
+    container_name: deluge
+    image: lscr.io/linuxserver/deluge:latest
+    volumes:
+      - /deluge/config:/config
+      - type: bind
+        source: /media/axel/Data1/Downloads
+        target: /downloads
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    ports:
+      - 8112:8112 # the web ui
+      - 6881:6881
+      - 6881:6881/udp
+      - 58846:58846 #optional
+
+  jellyfin:
+    container_name: jellyfin
+    image: jellyfin/jellyfin
+    volumes:
+      - ./jellyfin/config:/config
+      - ./jellyfin/cache:/cache
+      - type: bind
+        source: /media/axel/Data1/Downloads
+        target: /Downloads
+    environment:
+      - JELLYFIN_PublishedServerUrl=http://shit-post.org
+    ports:
+      - 8096:8096/tcp

@@ -1,0 +1,23 @@
+# services:
+#   vsserver:
+#     image: vintage_story_server:any
+#     container_name: vintagestory_server
+#     ports:
+#       - "42420:42420"
+#     volumes:
+#       - /data/server:/home/vintagestory/server
+#       - /data/data:/var/vintagestory/data
+#     environment:
+#       - VS_VERSION=1.18.1
+
+services:
+  vintagestory:
+    image: zsuatem/vintagestory:1.20.3
+    container_name: vintagestory
+    restart: always
+    ports:
+      - 42420:42420/tcp
+    volumes:
+      - ./server/data:/vintagestory/data
+    stdin_open: true
+    tty: true

@@ -1,0 +1,27 @@
+services:
+    valheim:
+        container_name: valheim
+        image: ghcr.io/lloesche/valheim-server
+        volumes:
+            - ./config:/config
+            - ./data:/opt/valheim
+        # network_mode: "host"
+        cap_add:
+            - sys_nice    
+        restart: always
+        stop_grace_period: 2m
+        ports:
+            - "2456-2458:2456-2458/udp"
+            - "9001:9001/tcp"
+        env_file: "valheim.env"
+        # environment:
+        #     - SERVER_NAME="Valheim des bros"
+        #     - WORLD_NAME="Valheim des bros"
+        #     - SERVER_PASS="pouetpouet"
+        #     - SERVER_ARGS="-crossplay"
+        #     - BEPINEX="true"
+        #     - SERVER_PUBLIC="false"
+        #     - SUPERVISOR_HTTP="true"
+        #     - SUPERVISOR_HTTP_PASS="caca"
+        #     - STATUS_HTTP_PORT="3040"
+        #     - STATUS_HTTP="true"
