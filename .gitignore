@@ -14,4 +14,4 @@ medias/deluge/
 
 seafile/data/
 seafileold/data/
-.env
+#.env

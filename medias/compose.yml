@@ -18,6 +18,9 @@ services:
       - 58846:58846 #optional
     networks:
       - coloc-net
+    labels:
+      caddy: ${DELUGE_SERVER_PROTOCOL}://${DELUGE_SERVER_HOSTNAME}
+      caddy.reverse_proxy: "{{upstreams 8112}}"
   jellyfin:
     container_name: jellyfin
     image: jellyfin/jellyfin
