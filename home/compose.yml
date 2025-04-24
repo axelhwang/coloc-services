@@ -1,0 +1,39 @@
+services:
+  homer:
+    image: b4bz/homer
+    container_name: homer
+    volumes:
+      - ./conf:/www/assets # Make sure your local config directory exists
+    # ports:
+    #   - 8080:8080
+    user: 1000:1000 # default
+    environment:
+      - INIT_ASSETS=1 # default, requires the config directory to be writable for the container user (see user option)
+    restart: unless-stopped
+
+    labels:
+      caddy: https://home.coloc.me
+      caddy.reverse_proxy: "{{upstreams 8080}}"
+    networks:
+      - coloc-net
+
+  glances:
+    image: nicolargo/glances:latest
+    container_name: glances
+    environment:
+      - TZ=Europe/Rome
+      - GLANCES_OPT=-w
+    ports:
+      - 61208:61208
+    restart: unless-stopped
+
+    labels:
+      caddy: https://glances.coloc.me
+      caddy.reverse_proxy: "{{upstreams 61208}}"
+    networks:
+      - coloc-net
+
+networks:
+  coloc-net:
+    name: coloc-net
+    external: true
