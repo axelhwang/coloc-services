@@ -1,5 +1,4 @@
 services:
-
   deluge:
     container_name: deluge
     image: lscr.io/linuxserver/deluge:latest
@@ -17,7 +16,8 @@ services:
       - 6881:6881
       - 6881:6881/udp
       - 58846:58846 #optional
-
+    networks:
+      - coloc-net
   jellyfin:
     container_name: jellyfin
     image: jellyfin/jellyfin
@@ -28,6 +28,16 @@ services:
         source: /media/axel/Data1/Downloads
         target: /Downloads
     environment:
-      - JELLYFIN_PublishedServerUrl=http://shit-post.org
-    ports:
-      - 8096:8096/tcp
+      - JELLYFIN_PublishedServerUrl={$JELLYFIN_SERVER_PROTOCOL}://{$JELLYFIN_SERVER_HOSTNAME}
+    labels:
+      caddy: ${JELLYFIN_SERVER_PROTOCOL}://${JELLYFIN_SERVER_HOSTNAME}
+      caddy.reverse_proxy: "{{upstreams 8096}}"
+    # ports:
+    #   - 8096:8096/tcp
+    networks:
+      - coloc-net
+
+networks:
+  coloc-net:
+    name: coloc-net
+    external: true

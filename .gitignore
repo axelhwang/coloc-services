@@ -7,9 +7,11 @@ valheim/Valheim/
 
 satisfactory/config
 
-reverse-proxy/certbot/www
+reverse-proxy/data
 
 medias/jellyfin/
 medias/deluge/
 
 seafile/data/
+seafileold/data/
+.env

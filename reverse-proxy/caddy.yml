@@ -1,0 +1,25 @@
+services:
+  caddy:
+    image: lucaslorentz/caddy-docker-proxy:2.9-alpine
+    restart: unless-stopped
+    container_name: seafile-caddy
+    ports:
+      - 3111:80
+      - 3112:443
+    environment:
+      - CADDY_INGRESS_NETWORKS=coloc-net
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${SEAFILE_CADDY_VOLUME:-/opt/seafile-caddy}:/data/caddy
+    networks:
+      - coloc-net
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail http://localhost:2019/metrics || exit 1"]
+      start_period: 20s
+      interval: 20s
+      timeout: 5s
+      retries: 3
+
+networks:
+  coloc-net:
+    name: coloc-net
