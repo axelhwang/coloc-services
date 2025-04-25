@@ -5,7 +5,7 @@ services:
     volumes:
       - /deluge/config:/config
       - type: bind
-        source: /media/axel/Data1/Downloads
+        source: ./Downloads
         target: /downloads
     environment:
       - PUID=1000
@@ -28,7 +28,7 @@ services:
       - ./jellyfin/config:/config
       - ./jellyfin/cache:/cache
       - type: bind
-        source: /media/axel/Data1/Downloads
+        source: ./Downloads
         target: /Downloads
     environment:
       - JELLYFIN_PublishedServerUrl={$JELLYFIN_SERVER_PROTOCOL}://{$JELLYFIN_SERVER_HOSTNAME}

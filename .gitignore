@@ -11,7 +11,8 @@ reverse-proxy/data
 
 medias/jellyfin/
 medias/deluge/
+medias/Downloads/
 
 seafile/data/
 seafileold/data/
-#.env
+.env
