@@ -2,15 +2,17 @@ services:
   caddy:
     image: lucaslorentz/caddy-docker-proxy:2.9-alpine
     restart: unless-stopped
-    container_name: seafile-caddy
+    container_name: caddy
     ports:
       - 3111:80
       - 3112:443
     environment:
       - CADDY_INGRESS_NETWORKS=coloc-net
+      - CADDY_DOCKER_CADDYFILE_PATH=/caddyfile/CaddyFile
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ${SEAFILE_CADDY_VOLUME:-/opt/seafile-caddy}:/data/caddy
+      - ${CADDY_VOLUME:?Volumne not set}:/data/caddy
+      - ./config:/caddyfile
     networks:
       - coloc-net
     healthcheck:

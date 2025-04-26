@@ -186,15 +186,15 @@ services:
     lists:
       - name: "System"
         icon: "fa-solid fa-heart-pulse"
-        url: https://glances.coloc.me
+        url: https://glances.coloc.me/
         # url: glances:61208
         # url: http://127.0.0.1:61208
         type: Glances
         stats: [cpu, mem] # Metric to display. Possible values are: load, cpu, mem, swap.
         updateInterval: 5000
 
-      - name: "Jellystat"
-        # logo: "assets/tools/jellystat.png"
-        url: "https://stream.coloc.me"
-        type: "Jellystat"
-        apikey: "4dc27f43c6604eed8e87258b597d0522"
+        # - name: "Jellystat"
+        #   # logo: "assets/tools/jellystat.png"
+        #   url: "https://stream.coloc.me"
+        #   type: "Jellystat"
+        #   apikey: "4dc27f43c6604eed8e87258b597d0522"

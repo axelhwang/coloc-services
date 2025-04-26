@@ -1,0 +1,42 @@
+
+
+(cors) {
+
+    @cors_preflight{args[0]} method OPTIONS
+    @cors{args[0]} header Origin {args[0]}
+
+    handle @cors_preflight{args[0]} {
+        header {
+            Access-Control-Allow-Origin "{args[0]}"
+            Access-Control-Allow-Methods "GET, POST, PUT, PATCH, DELETE, OPTIONS"
+            Access-Control-Allow-Headers *
+            Access-Control-Max-Age "3600"
+            defer
+        }
+        respond "" 204
+    }
+
+    handle @cors{args[0]} {
+        header {
+            Access-Control-Allow-Origin "{args[0]}"
+            Access-Control-Expose-Headers *
+            defer
+        }
+    }
+}
+
+https://home.coloc.me {
+	
+	@not-local not remote_ip 192.168.1.0/24
+	basic_auth @not-local {
+		capitaine $2a$14$BZJ5TkfeoelExgQg8JdyQO9youW5Yg3.2Pn3m5Fe8N3Dd6f.nNE3m
+	}
+	
+	reverse_proxy http://home:8080
+}
+
+
+https://glances.coloc.me {
+	import cors https://home.coloc.me
+	reverse_proxy http://glances:61208
+}
