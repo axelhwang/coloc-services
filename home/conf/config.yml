@@ -77,20 +77,7 @@ colors:
     link-hover: "#ffdd57"
     # background-image: "/assets/your/dark/bg.png" # prefix with your sub subpath if any (ex: /homer/assets/...)
 
-# Optional message
 message:
-  # url: "https://<my-api-endpoint>" # Can fetch information from an endpoint to override value below.
-  # mapping: # allows to map fields from the remote format to the one expected by Homer
-  #   title: 'id' # use value from field 'id' as title
-  #   content: 'value' # value from field 'value' as content
-  # refreshInterval: 10000 # Optional: time interval to refresh message
-  #
-  # Real example using chucknorris.io for showing Chuck Norris facts as messages:
-  # url: https://api.chucknorris.io/jokes/random
-  # mapping:
-  #   title: 'id'
-  #   content: 'value'
-  # refreshInterval: 10000
   style: "is-info"
   title: "Coucou!"
   icon: "fa-duotone fa-solid fa-house"
@@ -130,11 +117,8 @@ services:
         tagstyle: "is-warning"
         url: "https://stream.coloc.me"
         target: "_blank" # optional html tag target attribute
-  - name: "Stockage"
-    icon: "fa-solid fa-database"
-    items:
       - name: "Torrents"
-        subtitle: "Téléchargements et gestion des .torrent"
+        subtitle: "Téléchargements et gestion des torrents"
         # logo: "assets/tools/sample.png"
         # Alternatively a fa icon can be provided:
         icon: "fa-solid fa-cloud-arrow-down"
@@ -183,18 +167,37 @@ services:
 
   - name: "Administration"
     icon: "fa-duotone fa-solid fa-screwdriver-wrench"
-    lists:
-      - name: "System"
+    items:
+      - name: "Freebox"
+        subtitle: "Accès à la Freebox"
+        icon: "fa-solid fa-ethernet"
+        tag: "freebox"
+        tagstyle: "is-info"
+        url: "http://mafreebox.freebox.fr/"
+        target: "_blank"
+
+      - name: "Metrics Serveur"
         icon: "fa-solid fa-heart-pulse"
         url: https://glances.coloc.me/
         # url: glances:61208
         # url: http://127.0.0.1:61208
         type: Glances
-        stats: [cpu, mem] # Metric to display. Possible values are: load, cpu, mem, swap.
+        version: 4
+        stats: [cpu, mem, load] # Metric to display. Possible values are: load, cpu, mem, swap.
         updateInterval: 5000
+        target: "_blank"
 
-        # - name: "Jellystat"
-        #   # logo: "assets/tools/jellystat.png"
-        #   url: "https://stream.coloc.me"
-        #   type: "Jellystat"
-        #   apikey: "4dc27f43c6604eed8e87258b597d0522"
+      # - name: "Metrics Stream"
+      #   icon: "fa-solid fa-display"
+      #   url: "https://stream.coloc.me/"
+      #   type: "Jellystat"
+      #   apikey: "4dc27f43c6604eed8e87258b597d0522"
+
+      # # https://github.com/qbittorrent/qBittorrent/pull/12579
+      # - name: "Metrics Torrent"
+      #   icon: "fa-solid fa-gauge-high"
+      #   url: "https://torrent.coloc.me/" # Your rTorrent web UI, f.e. ruTorrent or Flood.
+      #   type: "qBittorrent"
+      #   rateInterval: 2000 # Interval for updating the download and upload rates.
+      #   torrentInterval: 5000 # Interval for updating the torrent count.
+      #   target: "_blank" # optional html a tag target attribute

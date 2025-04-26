@@ -1,26 +1,24 @@
 services:
-  deluge:
-    container_name: deluge
-    image: lscr.io/linuxserver/deluge:latest
-    volumes:
-      - /deluge/config:/config
-      - type: bind
-        source: ./Downloads
-        target: /downloads
+  torrent:
+    container_name: torrent
+
+    image: lscr.io/linuxserver/qbittorrent:latest
+    networks:
+      - coloc-net
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Etc/UTC
-    ports:
-      - 8112:8112 # the web ui
-      - 6881:6881
-      - 6881:6881/udp
-      - 58846:58846 #optional
-    networks:
-      - coloc-net
-    labels:
-      caddy: ${DELUGE_SERVER_PROTOCOL}://${DELUGE_SERVER_HOSTNAME}
-      caddy.reverse_proxy: "{{upstreams 8112}}"
+      - TZ=Europe/Berlin
+      - WEBUI_PORT=8080
+    volumes:
+      - ./torrent/qbittorrent:/config
+      - ./torrent/data/torrents:/data/torrents
+      - type: bind
+        source: ./downloads
+        target: /downloads
+    # depends_on:
+    #   gluetun:
+    #     condition: service_healthy
   jellyfin:
     container_name: jellyfin
     image: jellyfin/jellyfin
@@ -28,13 +26,10 @@ services:
       - ./jellyfin/config:/config
       - ./jellyfin/cache:/cache
       - type: bind
-        source: ./Downloads
-        target: /Downloads
+        source: ./downloads
+        target: /downloads
     environment:
-      - JELLYFIN_PublishedServerUrl={$JELLYFIN_SERVER_PROTOCOL}://{$JELLYFIN_SERVER_HOSTNAME}
-    labels:
-      caddy: ${JELLYFIN_SERVER_PROTOCOL}://${JELLYFIN_SERVER_HOSTNAME}
-      caddy.reverse_proxy: "{{upstreams 8096}}"
+      - JELLYFIN_PublishedServerUrl=https://stream.coloc.me
     # ports:
     #   - 8096:8096/tcp
     networks:

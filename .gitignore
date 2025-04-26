@@ -10,8 +10,9 @@ satisfactory/config
 reverse-proxy/data
 
 medias/jellyfin/
+medias/torrent/
 medias/deluge/
-medias/Downloads/
+medias/downloads/
 
 seafile/data/
 seafileold/data/

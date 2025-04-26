@@ -1,5 +1,4 @@
 
-
 (cors) {
 
     @cors_preflight{args[0]} method OPTIONS
@@ -25,9 +24,12 @@
     }
 }
 
+# Access-Control-Allow-Origin
+# Page de garde
 https://home.coloc.me {
 	
 	@not-local not remote_ip 192.168.1.0/24
+	
 	basic_auth @not-local {
 		capitaine $2a$14$BZJ5TkfeoelExgQg8JdyQO9youW5Yg3.2Pn3m5Fe8N3Dd6f.nNE3m
 	}
@@ -35,8 +37,22 @@ https://home.coloc.me {
 	reverse_proxy http://home:8080
 }
 
-
+# Statistiques
 https://glances.coloc.me {
-	import cors https://home.coloc.me
+	import cors {header.origin} # https://home.coloc.me/
 	reverse_proxy http://glances:61208
+}
+
+# Streaming
+https://stream.coloc.me {
+	import cors {header.origin}
+	# import cors https://home.coloc.me/
+	reverse_proxy http://jellyfin:8096
+}
+
+# Torrents
+https://torrent.coloc.me {
+	import cors {header.origin}
+	# import cors https://home.coloc.me/
+	reverse_proxy http://torrent:8080
 }
